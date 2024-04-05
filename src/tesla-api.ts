@@ -12,8 +12,8 @@ import {
   VehicleState,
 } from './types';
 
-const DEFAULT_URI = 'https://owner-api.teslamotors.com/';
-const AUTH_URI = 'https://auth.tesla.com/';
+const DEFAULT_URI = 'https://owner-api.teslamotors.com';
+const AUTH_URI = 'https://auth.tesla.com';
 const USER_AGENT = 'Tesla-Prometheus-Exporter';
 const TOKEN_TIMEOUT_MS = 1000 * 60 * 60 * 7; // 7 hours
 
@@ -36,7 +36,7 @@ export class TeslaAPI {
   }
 
   async getAccessToken(): Promise<string> {
-    const response = await fetch(`${this.authURI}oauth2/v3/token`, {
+    const response = await fetch(`${this.authURI}/oauth2/v3/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export class TeslaAPI {
 
   async vehicles(): Promise<Vehicle[]> {
     await this.refreshAccessToken();
-    const response = await this.fetch('/api/1/vehicles');
+    const response = await this.fetch('/api/1/products');
     const apiResponse: Response<Vehicle[]> = await response.json();
     return apiResponse.response;
   }
